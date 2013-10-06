@@ -10,6 +10,7 @@ using namespace std;
 *
 **/
 Puzzle::Puzzle(){
+	
 }
 Puzzle::~Puzzle(){
 }
@@ -164,21 +165,92 @@ bool Puzzle::IsEqual(vector<vector<int> > P1, vector<vector<int> > P2){
 	return equal;
 	
 }
-
+/*
+* SWAP 
+*	memindahkan koordinat blank jadi "keatas/atau ke bawah /kanan kiri" BUKAN angkanya yang diatas diturunin ke bawah
+* input :
+*	koordinat blank x dan y posisi yang blank, char 1 2 3 4 representasi up, left down right
+* output :
+*	berpindah
+***/
 vector<vector<int> > Puzzle::Swap(int x,int y,char movement, vector<vector<int> > _Puzzle){
-	vector<vector<int> > Ret_val=_Puzzle; //copy the puzzle 
-	/*switch (movement){
-	case "u" : //up
+	vector<vector<int> > Ret_val=_Puzzle; //copy the puzzle  	
+	//validate first wheter the puzzle is can be geser able
+
+	switch (movement){
+	case 1 : //up
+		if (y>0)
+		{
+			Ret_val[x][y] = Ret_val[x][y-1]; // sistem koordinat dimulai dari angka 0 di kiri atas
+			Ret_val[x][y-1] = 0;
+		}else{
+			Ret_val.clear();
+		}
 		break;
-	case "l" : //left
+	case 2 : //left
+		if (x>0)
+		{
+			Ret_val[x][y] = Ret_val[x-1][y];//
+			Ret_val[x-1][y] =0;
+		}else{
+			Ret_val.clear();
+		}
 		break;
-	case "d" : //down
+	case 3 : //down
+		if (y<2)
+		{
+			Ret_val[x][y] = Ret_val[x][y+1]; //
+			Ret_val[x][y+1] = 0;
+		}else{
+			Ret_val.clear();
+		}
 		break;
-	case "r" : //right
+	case 4 : //right
+		if (x<2){
+			Ret_val[x][y] = Ret_val[x+1][y];
+			Ret_val[x+1][y] =0;
+		}else{
+			Ret_val.clear();
+		}
 		break;
 	default:
 		break;
-	}*/
+	}
 	return Ret_val;
+
+}
+
+/*
+* CONVERT TO STRING 
+*	mengubah Puzzle menjadi sting 
+* input :
+*	Matrix Puzzle
+* output :
+*	String representasi puzzle
+***/
+string Puzzle::ConvertPuzzleToString(vector<vector<int> > Matrix){
+	string temp="";
+	for (int i = 0; i < Matrix.size(); i++)
+	{
+		for (int j = 0; j < Matrix[i].size(); j++)
+		{
+			string ss = to_string(Matrix[i][j]);
+			temp=temp + ss + ","; 
+		}
+	}
+	temp=temp.substr(0,temp.size()-1);
+	return temp;
+}
+
+/*
+* SOLVE
+*	menyelesaikan puzzle dan 
+* input :
+*	-
+* output :
+*	-
+***/
+
+void Puzzle::SolveBFS(){
 
 }

@@ -4,6 +4,9 @@
 #include <fstream>
 #include <string>
 #include <cstdio>
+#include <queue>
+#include <hash_map>
+#include "simpul.h"
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
@@ -14,6 +17,11 @@ private:
 	vector<vector<int> > Puzzle_Start;	
 	vector<vector<int> > Puzzle_Finish;
 	int Puzzle_size;
+	queue<Simpul> antrian_simpul;
+	Simpul *Root; // Root simpul
+	//hash_map<Simpul> Domain_simpul;
+
+
 public:
 	//Ctor dtor
 	Puzzle();
@@ -36,8 +44,9 @@ public:
 	void CetakPuzzle(vector<vector<int> >);
 	vector<vector<int> > Swap(int,int,char,vector<vector<int> >);
 	bool IsValidSwap(int,char,int); // input: Current position of B, movement type(u/l/d/r), vector<vector<int> > size
-	string Puzzle_To_String(vector<vector<int> >); // Cetak puzzle vector<vector<int> > inpu
 	bool IsEqual(vector<vector<int> >,vector<vector<int> >); // return true when both vector<vector<int> > have same size and each element are equal
+	string ConvertPuzzleToString(vector<vector<int> >);// Cetak puzzle vector<vector<int> > inpu
+	void SolveBFS();
 
 };
 #endif
