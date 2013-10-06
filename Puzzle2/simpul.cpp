@@ -5,7 +5,7 @@ int Simpul::num_of_node = 0;
 
 Simpul::Simpul(vector<vector<int> > S,int P, char M,char _blank_x,char _blank_y){
 	state_id=num_of_node;
-	num_of_node++;
+	num_of_node++; // state id akan bertambah seiring dengan jumlah node yang di create secara otomatis
 	State=S;
 	parent_id=P;
 	movement=M;

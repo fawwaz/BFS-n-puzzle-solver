@@ -5,10 +5,11 @@
 #include <string>
 #include <cstdio>
 #include <set>
+#include <queue>
 #include "simpul.h"
 #ifndef PUZZLE_H
 #define PUZZLE_H
-
+typedef Simpul Simpul; // agar ketika membuat set bisa langsung dipake
 
 using namespace std;
 class Puzzle{
@@ -16,7 +17,8 @@ private:
 	vector<vector<int> > Puzzle_Start;	
 	vector<vector<int> > Puzzle_Finish;
 	Simpul *Root;
-	//set
+	set<Simpul> HimpunanRuangSolusi; // Karena setiap state dari cabang ruang solusi harus unik, saya menggunakan stl set
+	queue<Simpul> antrianBFS;
 	int Puzzle_size;
 public:
 	//Ctor dtor
@@ -43,6 +45,6 @@ public:
 	string Puzzle_To_String(vector<vector<int> >); // Cetak puzzle vector<vector<int> > inpu
 	bool IsEqual(vector<vector<int> >,vector<vector<int> >); // return true when both vector<vector<int> > have same size and each element are equal
 	void SolveBFS();
-	//vector<Simpul>;
+	vector<Simpul> GenerateSimpulAnak(Simpul);
 };
 #endif

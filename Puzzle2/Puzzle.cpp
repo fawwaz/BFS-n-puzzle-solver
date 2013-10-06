@@ -118,17 +118,6 @@ void Puzzle::LoadFiles(){
 	fclose(stdin);
 	//file_input.close();
 	
-
-	/*
-	* FUNGSI vector<vector<int> > TO STRING vector<vector<int> >ToString() --> String
-	* input : 
-	* 	vector<vector<int> >
-	* init state : -
-	* final state : vector<vector<int> > input diterjemahkan menjadi serentetan String seperti contoh di buku
-	**/
-
-	
-
 	/*
 	* FUNGSI IS vector<vector<int> > EQUAL
 	* input : 
@@ -165,20 +154,124 @@ bool Puzzle::IsEqual(vector<vector<int> > P1, vector<vector<int> > P2){
 	
 }
 
-vector<vector<int> > Puzzle::Swap(int x,int y,char movement, vector<vector<int> > _Puzzle){
-	vector<vector<int> > Ret_val=_Puzzle; //copy the puzzle 
-	/*switch (movement){
-	case "u" : //up
+vector<vector<int> > Puzzle::Swap(int x,int y,char movement, vector<vector<int> > P){
+	/*
+	* Sistem koordinat mengacu kiri atas sebagai titik 0,0 lalu x ke bawah dan y ke kanan
+	**/
+	vector<vector<int> > Ret_val=P; //copy the puzzle 
+	switch (movement){
+	case 1 : //up
+		//validate bisa di naikin ke atas gak jangan jangan udah paling atas lagi blank spacenya
+		if (x>0) 
+		{
+			Ret_val[x][y] = Ret_val[x-1][y]; // lakukan swapping
+			Ret_val[x][y] = 0;
+		}else{
+			Ret_val.clear(); // hapus elemen retval
+		}
 		break;
-	case "l" : //left
+	case 2 : //right , ulangi seperti case 1 ...
+		if (y<Puzzle_size-1) 
+		{
+			Ret_val[x][y] = Ret_val[x][y+1]; 
+			Ret_val[x][y] = 0;
+		}else{
+			Ret_val.clear(); 
+		}
 		break;
-	case "d" : //down
+	case 3 : //down
+		if (x>Puzzle_size-1) 
+		{
+			Ret_val[x][y] = Ret_val[x+1][y]; 
+			Ret_val[x][y] = 0;
+		}else{
+			Ret_val.clear(); 
+		}
 		break;
-	case "r" : //right
+	case 4 : //left
+		if (y>0) 
+		{
+			Ret_val[x][y] = Ret_val[x][y-1]; 
+			Ret_val[x][y] = 0;
+		}else{
+			Ret_val.clear(); 
+		}
 		break;
 	default:
 		break;
-	}*/
+	}
 	return Ret_val;
 
 }
+
+/*
+* FUNGSI vector<vector<int> > TO STRING vector<vector<int> >ToString() --> String
+* input : 
+* 	vector<vector<int> >
+* init state : -
+* final state : vector<vector<int> > input diterjemahkan menjadi serentetan String seperti contoh di buku
+**/
+string PuzzleToString(vector<vector<int> > P){
+	string temp="";
+	for (int i = 0; i < P.size(); i++)
+	{
+		for (int j = 0; j < P[i].size(); j++)
+		{
+			string stemp = to_string(P[i][j]);
+			temp = temp + stemp + ",";
+		}
+	}
+	temp = temp.substr(0,temp.length()-1);
+	return temp;
+}
+
+
+
+
+
+void Puzzle::SolveBFS(){
+	
+	// Mencari posisi blank x dan blank y pada puzzle start untuk kemudian digunakan selanjutnya
+	bool founded=false;char blankx,blanky;
+	for (int i = 0; (i < Puzzle_Start.size() && !founded); i++){
+		for (int j = 0; (j < Puzzle_Finish[i].size() && !founded); j++){
+			if (Puzzle_Start[i][j]==0){
+				blankx=i;
+				blanky=j;
+				founded=true;
+			}
+		}
+	}
+	
+	
+	// Sesuai dengan konstruktor yang sudah dibuat , 
+	// Buatlah sebuah "simpul" dengan elemen elemen root node, yaitu statenya adalah kondisi mula mula puzzle, root node nya di set 0
+	// Movement yang digunakan untuk ke state ini 0 (0 khusus root 1 untuk atas, 2 untuk kanan, 3 untuk bawah, 4 untuk kiri - clockwise rule)
+	Simpul *Root = new Simpul(Puzzle_Start,0,0,blankx,blanky);
+	bool isSolved=false;
+
+	Simpul SimpulAktif=*Root; 
+	while(!IsEqual(SimpulAktif.get_state(),Puzzle_Finish)){
+		HimpunanRuangSolusi.insert(SimpulAktif);
+
+		//Mencari semua simpul yang mungkin di generate dari titik aktif node
+	}
+}
+
+vector<Simpul> Puzzle::GenerateSimpulAnak(Simpul Parent){
+	// Setup awal awal terlebih dahulu
+	vector<vector<int> > StateParent=Parent.get_state();
+	int blankx,blanky;
+	blankx = Parent.get_blank_x();
+	blanky = Parent.get_blank_y();
+
+	// Gunakan fungsi swap untuk mencoba seluruh state yang bisa digenerate dengan memainkan variable input urutan ke 3 milik fungsi swap
+	// 1 untuk atas, 2 untuk kanan, 3 untuk bawah, 4 untuk kiri
+	vector<Simpul> vtemp;
+	vtemp.clear();
+	for (int i = 0; i < 4; i++){
+		swa
+	}
+}
+
+
